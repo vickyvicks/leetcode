@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        
+        int n = s.size(), low, high, start = 0, maxLen = 1;
+        for(int i = 1; i < n; i++)
+        {
+            low = i-1, high = i;//even length palindrome with center point as i-1, i
+            find_longest(s, n, low, high, start, maxLen);
+            high = i+1;//Odd length palindrome with center point as i
+            find_longest(s, n, low, high, start, maxLen);
+        }
+        return s.substr(start, maxLen);
+    }
+private:
+    void find_longest(string s, int n, int i, int j, int &start, int &maxLen)
+    {
+        while(i >= 0 && j < n && s[i] == s[j])
+        {
+            if(j - i + 1 > maxLen)
+            {
+                start = i;
+                maxLen = j - i + 1;
+            }
+            i--, j++;
+        }
+    }
+};
